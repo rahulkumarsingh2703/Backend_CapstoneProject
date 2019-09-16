@@ -1,78 +1,88 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+/**
+ * RestaurantEntity class contains all the attributes to be mapped to all the fields in 'restaurant' table in the database
+ */
 @Entity
 @Table(name = "restaurant")
-
 @NamedQueries(
-        {       @NamedQuery(name = "getAllRestaurants", query = "select res from RestaurantEntity res"),
-                @NamedQuery(name = "getAllRestaurantsByName", query = "select res from RestaurantEntity res where res.restaurantName LIKE :resNameKey"),
-                @NamedQuery(name = "getRestaurantByUUID", query = "select res from RestaurantEntity res where res.uuid = :restaurantUUID"),
-                @NamedQuery(name = "getRestaurantById", query = "select res from RestaurantEntity res where res.id = :restaurantId")
+        {
+                @NamedQuery(name = "allRestaurantsByRating", query = "select q from RestaurantEntity q order by q.customerRating desc"),
+                @NamedQuery(name = "restaurantByUUID", query = "select q from RestaurantEntity q where q.uuid = :uuid"),
         }
 )
-
 public class RestaurantEntity implements Serializable {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid")
+    @NotNull
     @Size(max = 200)
-    private String  uuid;
+    private String uuid;
 
     @Column(name = "restaurant_name")
+    @NotNull
     @Size(max = 50)
     private String restaurantName;
 
     @Column(name = "photo_url")
-    @Size(max = 225)
-    private String photoURL;
+    @NotNull
+    @Size(max = 255)
+    private String photoUrl;
 
     @Column(name = "customer_rating")
-    private BigDecimal customeRating;
+    @NotNull
+    private BigDecimal customerRating;
 
     @Column(name = "average_price_for_two")
+    @NotNull
     private Integer avgPriceForTwo;
 
-//    public List<CategoryEntity> getCategories() {
-//        return categories;
-//    }
-//
-//    public void setCategories(List<CategoryEntity> categories) {
-//        this.categories = categories;
-//    }
-
     @Column(name = "number_of_customers_rated")
-    private Integer numbrOfCustomersRated;
+    @NotNull
+    private Integer customersRated;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "address_id")
-    private AddressEntity addressEntity;
+    @NotNull
+    private AddressEntity address;
 
-//    @ManyToMany(cascade=CascadeType.ALL)
-//    @JoinTable(name="restaurant_category", joinColumns={@JoinColumn(referencedColumnName="ID")}
-//            , inverseJoinColumns={@JoinColumn(referencedColumnName="ID")})
-//    private List<CategoryEntity> categories = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "restaurant_category", joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private List<CategoryEntity> categories = new ArrayList<>();
 
-//    @ManyToMany(cascade=CascadeType.ALL)
-//    @JoinTable(name="restaurant_category", joinColumns={@JoinColumn(name = "RESTAURANT_ID", referencedColumnName="ID")}
-//            , inverseJoinColumns={@JoinColumn(name = "CATEGORY_ID", referencedColumnName="ID")})
-//    private List<CategoryEntity> categories = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(name = "restaurant_item", joinColumns = @JoinColumn(name = "restaurant_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
+    private List<ItemEntity> items = new ArrayList<>();
 
-//    @ManyToMany(cascade=CascadeType.ALL)
-//    @JoinTable(name="restaurant_category", joinColumns={@JoinColumn(name="restaurant_id")}
-//            , inverseJoinColumns={@JoinColumn(name="category_id")})
-//    private List<CategoryEntity> categories = new ArrayList<>();
+    public List<ItemEntity> getItems() {
+        return items;
+    }
+
+    public void setItems(List<ItemEntity> items) {
+        this.items = items;
+    }
+
+    public List<CategoryEntity> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<CategoryEntity> categories) {
+        this.categories = categories;
+    }
 
     public Integer getId() {
         return id;
@@ -98,43 +108,43 @@ public class RestaurantEntity implements Serializable {
         this.restaurantName = restaurantName;
     }
 
-    public String getPhotoURL() {
-        return photoURL;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setPhotoURL(String photoURL) {
-        this.photoURL = photoURL;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public BigDecimal getCustomeRating() {
-        return customeRating;
+    public Double getCustomerRating() {
+        return customerRating.doubleValue();
     }
 
-    public void setCustomeRating(BigDecimal customeRating) {
-        this.customeRating = customeRating;
+    public void setCustomerRating(Double customerRating) {
+        this.customerRating = new BigDecimal(customerRating);
     }
 
-    public Integer getAvgPriceForTwo() {
+    public Integer getAvgPrice() {
         return avgPriceForTwo;
     }
 
-    public void setAvgPriceForTwo(Integer avgPriceForTwo) {
+    public void setAvgPrice(Integer avgPriceForTwo) {
         this.avgPriceForTwo = avgPriceForTwo;
     }
 
-    public Integer getNumbrOfCustomersRated() {
-        return numbrOfCustomersRated;
+    public Integer getNumberCustomersRated() {
+        return customersRated;
     }
 
-    public void setNumbrOfCustomersRated(Integer numbrOfCustomersRated) {
-        this.numbrOfCustomersRated = numbrOfCustomersRated;
+    public void setNumberCustomersRated(Integer customersRated) {
+        this.customersRated = customersRated;
     }
 
-    public AddressEntity getAddressEntity() {
-        return addressEntity;
+    public AddressEntity getAddress() {
+        return address;
     }
 
-    public void setAddressEntity(AddressEntity addressEntity) {
-        this.addressEntity = addressEntity;
+    public void setAddress(AddressEntity address) {
+        this.address = address;
     }
 }

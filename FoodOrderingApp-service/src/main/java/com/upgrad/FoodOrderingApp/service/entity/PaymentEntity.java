@@ -7,17 +7,26 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity
-@Table(name="PAYMENT")
+@Table(name = "payment")
 @NamedQueries(
         {
-                @NamedQuery(name = "getPayment", query = "select pe from PaymentEntity pe ")
+                @NamedQuery(name = "getPayment", query = "select q from PaymentEntity q"),
+                @NamedQuery(name = "paymentByUUID", query = "select q from PaymentEntity q where q.uuid = :uuid"),
         }
 )
 public class PaymentEntity implements Serializable {
+
+    public PaymentEntity() {}
+
+    public PaymentEntity(@NotNull @Size(max = 200) String uuid, @NotNull @Size(max = 255) String paymentName) {
+        this.uuid = uuid;
+        this.paymentName = paymentName;
+    }
 
     @Id
     @Column(name = "ID")
@@ -30,7 +39,7 @@ public class PaymentEntity implements Serializable {
 
     @Column(name = "PAYMENT_NAME")
     @Size(max = 255)
-    private String payment_name;
+    private String paymentName;
 
     public String getUuid() {
         return uuid;
@@ -40,12 +49,12 @@ public class PaymentEntity implements Serializable {
         this.uuid = uuid;
     }
 
-    public String getPayment_name() {
-        return payment_name;
+    public String getPaymentName() {
+        return paymentName;
     }
 
-    public void setPayment_name(String payment_name) {
-        this.payment_name = payment_name;
+    public void setPaymentName(String paymentName) {
+        this.paymentName = paymentName;
     }
 
     public int getId() {
@@ -54,21 +63,6 @@ public class PaymentEntity implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(this).hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
     }
 
 }

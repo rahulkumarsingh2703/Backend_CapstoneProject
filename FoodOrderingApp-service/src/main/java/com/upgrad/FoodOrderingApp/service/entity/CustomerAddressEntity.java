@@ -1,33 +1,27 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
+/**
+ * CustomerAddressEntity class contains all the attributes to be mapped to all the fields in 'customer_address' table in the database
+ */
 @Entity
-@Table(name = "CUSTOMER_ADDRESS")
-@NamedQueries({
-        @NamedQuery(name = "getCustomerAddress", query = "select cae from CustomerAddressEntity cae where cae.customer = :customer"),
-        @NamedQuery(name = "getAddress", query = "select cae from CustomerAddressEntity cae where cae.address = :address")
-})
-public class CustomerAddressEntity {
+@Table(name = "customer_address")
+public class CustomerAddressEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
     private Integer id;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "CUSTOMER_ID")
-    private CustomerEntity customer;
+    @Column(name = "customer_id")
+    @NotNull
+    private Integer customer;
 
-    @ManyToOne
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "ADDRESS_ID")
-    private AddressEntity address;
-
+    @Column(name = "address_id")
+    @NotNull
+    private Integer address;
 
     public Integer getId() {
         return id;
@@ -37,21 +31,19 @@ public class CustomerAddressEntity {
         this.id = id;
     }
 
-
-    public CustomerEntity getCustomerEntity() {
+    public Integer getCustomer() {
         return customer;
     }
 
-    public void setCustomerEntity(CustomerEntity customerEntity) {
-        this.customer = customerEntity;
+    public void setCustomer(Integer customer) {
+        this.customer = customer;
     }
 
-
-    public AddressEntity getAddressEntity() {
+    public Integer getAddress() {
         return address;
     }
 
-    public void setAddressEntity(AddressEntity addressEntity) {
-        this.address = addressEntity;
+    public void setAddress(Integer address) {
+        this.address = address;
     }
 }

@@ -1,50 +1,66 @@
 package com.upgrad.FoodOrderingApp.service.dao;
 
 import com.upgrad.FoodOrderingApp.service.entity.AddressEntity;
-import com.upgrad.FoodOrderingApp.service.entity.CustomerAddressEntity;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.NoResultException;
 
+/**
+ * AddressDao class provides the database access for all the endpoints in address controller
+ */
 @Repository
 public class AddressDao {
 
     @PersistenceContext
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
-    public AddressEntity getAddressByUUID (final String addressUUID) {
-        try{
-            return entityManager.createNamedQuery("addressByUUID", AddressEntity.class).setParameter("uuid", addressUUID).getSingleResult();
-        }catch (NoResultException nre){
-            return null;
-        }
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public AddressEntity saveAddress(AddressEntity addressEntity){
+    /**
+     * Creates address entity from given address
+     *
+     * @param addressEntity Address details
+     *
+     * @return AddressEntity object
+     */
+    public AddressEntity createAddress(AddressEntity addressEntity) {
         entityManager.persist(addressEntity);
         return addressEntity;
     }
 
-    @Transactional(propagation = Propagation.REQUIRED)
-    public CustomerAddressEntity save(CustomerAddressEntity customerAddressEntity){
-        entityManager.persist(customerAddressEntity);
-        return customerAddressEntity;
-    }
-
-    @Transactional(propagation = Propagation.REQUIRED)
-    public String deleteAddress(String address_uuid){
-        try{
-            AddressEntity addressEntity = getAddressByUUID(address_uuid);
-            entityManager.remove(addressEntity);
-            return addressEntity.getUuid();
-        }
-        catch (NoResultException nre) {
+    /**
+     * This method helps to fetch address by id
+     *
+     * @return AddressEntity object
+     */
+    public AddressEntity getAddressByUUID(String uuid) {
+        try {
+            return entityManager.createNamedQuery("addressByUUID", AddressEntity.class).setParameter("uuid", uuid).getSingleResult();
+        } catch (NoResultException nre) {
             return null;
         }
+    }
+
+    /**
+     * Updated given address entity
+     *
+     * @param addressEntity Address to update
+     *
+     * @return AddressEntity object
+     */
+    public AddressEntity updateAddressEntity(AddressEntity addressEntity) {
+        return entityManager.merge(addressEntity);
+    }
+
+    /**
+     * Deletes given address entity
+     *
+     * @param addressEntity Address to delete
+     *
+     * @return AddressEntity object
+     */
+    public AddressEntity deleteAddressEntity(AddressEntity addressEntity) {
+        entityManager.remove(addressEntity);
+        return addressEntity;
     }
 }

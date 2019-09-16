@@ -1,34 +1,32 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 
+/**
+ * CategoryItemEntity class contains all the attributes to be mapped to all the fields in 'category_item' table in the database
+ */
 @Entity
-@Table(name="CATEGORY_ITEM")
-
+@Table(name = "category_item")
 @NamedQueries({
-        @NamedQuery(name = "getItems",query = "select ce from CategoryItemEntity ce where ce.categoryEntity.uuid= :categoryId")
+        @NamedQuery(name = "categoryItemByCategoryId", query = "select q from CategoryItemEntity q where q.category = :categoryId"),
 })
-
-
-public class CategoryItemEntity {
+public class CategoryItemEntity implements Serializable {
 
     @Id
-    @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    CategoryEntity categoryEntity;
+    @JoinColumn(name = "item_id")
+    @NotNull
+    private ItemEntity item;
 
     @ManyToOne
-    @JoinColumn(name = "ITEM_ID")
-    ItemEntity itemEntity;
+    @JoinColumn(name = "category_id")
+    @NotNull
+    private CategoryEntity category;
 
     public Integer getId() {
         return id;
@@ -38,37 +36,19 @@ public class CategoryItemEntity {
         this.id = id;
     }
 
-    public CategoryEntity getCategoryEntity() {
-        return categoryEntity;
+    public ItemEntity getItem() {
+        return item;
     }
 
-    public void setCategoryEntity(CategoryEntity categoryEntity) {
-        this.categoryEntity = categoryEntity;
+    public void setItem(ItemEntity item) {
+        this.item = item;
     }
 
-    public ItemEntity getItemEntity() {
-        return itemEntity;
+    public CategoryEntity getCategory() {
+        return category;
     }
 
-    public void setItemEntity(ItemEntity itemEntity) {
-        this.itemEntity = itemEntity;
+    public void setCategory(CategoryEntity category) {
+        this.category = category;
     }
-
-
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder().append(this).hashCode();
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
-    }
-
-
 }

@@ -1,12 +1,9 @@
 package com.upgrad.FoodOrderingApp.api.controller;
 
-import com.upgrad.FoodOrderingApp.api.model.LoginResponse;
 import com.upgrad.FoodOrderingApp.api.model.PaymentListResponse;
 import com.upgrad.FoodOrderingApp.api.model.PaymentResponse;
-import com.upgrad.FoodOrderingApp.api.model.SignupCustomerRequest;
-import com.upgrad.FoodOrderingApp.service.business.PaymentBusinessService;
+import com.upgrad.FoodOrderingApp.service.businness.PaymentService;
 import com.upgrad.FoodOrderingApp.service.entity.PaymentEntity;
-import com.upgrad.FoodOrderingApp.service.exception.SignUpRestrictedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,13 +21,14 @@ import java.util.UUID;
 @CrossOrigin
 public class PaymentController {
     @Autowired
-    PaymentBusinessService paymentBusinessService;
+    PaymentService paymentBusinessService;
+
     @RequestMapping(method = RequestMethod.GET, path = "/payment", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public ResponseEntity<PaymentListResponse> payment(){
         PaymentListResponse paymentListResponse = new PaymentListResponse();
-        List<PaymentEntity> payments =paymentBusinessService.getAllPayment();
+        List<PaymentEntity> payments = paymentBusinessService.getAllPaymentMethods();
         for(PaymentEntity p : payments){
-          PaymentResponse payment= new PaymentResponse().id(UUID.fromString(p.getUuid())).paymentName(p.getPayment_name());
+          PaymentResponse payment= new PaymentResponse().id(UUID.fromString(p.getUuid())).paymentName(p.getPaymentName());
           paymentListResponse.addPaymentMethodsItem(payment);
         }
         return new ResponseEntity<PaymentListResponse>(paymentListResponse,HttpStatus.OK);

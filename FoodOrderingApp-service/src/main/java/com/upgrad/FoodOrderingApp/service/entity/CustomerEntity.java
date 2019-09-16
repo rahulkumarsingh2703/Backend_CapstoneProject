@@ -1,111 +1,127 @@
 package com.upgrad.FoodOrderingApp.service.entity;
 
-import org.apache.commons.lang3.builder.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "Customer")
-@NamedQueries({
-        @NamedQuery(name = "getAllCustomers", query = "select ce from CustomerEntity ce"),
-        @NamedQuery(name = "getCustomerByUUID", query = "select ce from CustomerEntity ce where ce.uuid = :uuid"),
-        @NamedQuery(name = "getCustomerByContactNo", query = "select ce from CustomerEntity ce where ce.contact_Number = :contact_Number")
-})
-public class CustomerEntity implements Serializable {
+@Table(name = "customer")
+@NamedQueries(
+        {
+                @NamedQuery(name = "customerByUuid", query = "select u from CustomerEntity u where u.uuid = :uuid"),
+                @NamedQuery(name = "customerByContactNumber", query = "select u from CustomerEntity u where u.contactnumber = :contactnumber"),
+                @NamedQuery(name = "customerByPassword", query = "select u from CustomerEntity u where u.password = :password")
+        }
+)
+public class CustomerEntity implements Serializable{
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer customer_id;
 
-    @Column(name = "UUID")
+    @Column(name = "uuid", unique = true)
+    @NotNull
     @Size(max = 200)
     private String uuid;
 
-    @Column(name = "FIRSTNAME")
+    @Column(name = "firstname")
     @NotNull
     @Size(max = 30)
-    private String firstname;
+    private String firstName;
 
-    @Column(name = "LASTNAME")
+    @Column(name = "lastname")
     @Size(max = 30)
-    private String lastname;
+    private String lastName;
 
     @Column(name = "email")
     @NotNull
     @Size(max = 50)
     private String email;
 
-    @Column(name = "CONTACT_NUMBER")
+    @Column(name = "contact_number" ,unique = true)
     @NotNull
     @Size(max = 30)
-    private String contact_Number;
+    private String contactnumber;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "password")
     @NotNull
     @Size(max = 255)
-    @ToStringExclude
     private String password;
 
+//    @NotNull
+//    @Size(max = 255)
+//    private String newPassword;
+
     @Column(name = "salt")
-    @Size(max = 255)
+    @NotNull
+    @Size(max = 200)
     private String salt;
 
-    public Integer getId() {
-        return id;
+
+    @OneToMany
+    @JoinTable(name = "customer_address", joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "address_id"))
+    private List<AddressEntity> addresses = new ArrayList<>();
+
+    public List<AddressEntity> getAddresses() {
+        return addresses;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Override
+    public boolean equals(Object obj) {
+        return new EqualsBuilder().append(this, obj).isEquals();
     }
+
+    public Integer getCustomer_id() {return customer_id; }
+    public void setCustomer_id(Integer customer_id){this.customer_id = customer_id;}
 
     public String getUuid() {
         return uuid;
     }
-
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public String getLastName() {
+        return lastName;
     }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
-
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public String getContact_Number() {
-        return contact_Number;
+    public String getContactNumber() {
+        return contactnumber;
     }
-
-    public void setContact_Number(String contact_Number) {
-        this.contact_Number = contact_Number;
+    public void setContactNumber(String contactnumber) {
+        this.contactnumber = contactnumber;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
-
     public void setPassword(String password) {
         this.password = password;
     }
@@ -113,15 +129,10 @@ public class CustomerEntity implements Serializable {
     public String getSalt() {
         return salt;
     }
-
     public void setSalt(String salt) {
         this.salt = salt;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        return new EqualsBuilder().append(this, obj).isEquals();
-    }
 
     @Override
     public int hashCode() {
