@@ -33,7 +33,7 @@ public class CategoryService {
     }
 
     /**
-     * This method implements the business logic for 'getCategoryById' endpoint
+     * 
      *
      * @param categoryUuid UUID of category
      *
@@ -56,7 +56,7 @@ public class CategoryService {
     }
 
     /**
-     * Returns all categories for a given restaurant
+     * 
      *
      * @param restaurantUUID UUID of restaurant entity
      *

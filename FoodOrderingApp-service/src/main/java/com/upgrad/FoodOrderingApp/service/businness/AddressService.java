@@ -29,16 +29,16 @@ public class AddressService {
 
 
     /**
-     * This method implements the business logic for 'save address' endpoint
-     * @param addressEntity new address will be created from given AddressEntity object
-     * @param customerEntity customer whose address is to be updated
-     * @return AddressEntity object
-     * @throws SaveAddressException exception if any of the validation fails on customer details
+     * 
+     * @param addressEntity
+     * @param customerEntity 
+     * @return 
+     * @throws SaveAddressException 
      */
     @Transactional(propagation = Propagation.REQUIRED)
     public AddressEntity saveAddress(AddressEntity addressEntity, CustomerEntity customerEntity) throws SaveAddressException {
 
-        // Validation for required fields
+       
         if (
                 addressEntity.getFlatBuilNo().equals("") ||
                         addressEntity.getLocality().equals("") ||
@@ -50,7 +50,7 @@ public class AddressService {
             throw new SaveAddressException("SAR-001", "No field can be empty");
         }
 
-        // Validation for format of Indian Pincode
+ 
         if(!addressEntity.getPincode().matches("^[1-9][0-9]{5}$")){
             throw new SaveAddressException("SAR-002", "Invalid pincode");
         }
@@ -66,10 +66,10 @@ public class AddressService {
     }
 
     /**
-     * Returns state for a given UUID
-     * @param stateUUID UUID of state entity
+     * 
+     * @param stateUUID 
      * @return StateEntity object
-     * @throws AddressNotFoundException If validation on state fails
+     * @throws AddressNotFoundException 
      */
     public StateEntity getStateByUUID(String stateUUID) throws AddressNotFoundException {
         StateEntity stateEntity = stateDao.getStateByUUID(stateUUID);
@@ -80,8 +80,8 @@ public class AddressService {
     }
 
     /**
-     * Returns all addresses for a given customer
-     * @param customerEntity Customer whose addresses are to be returned
+     * 
+     * @param customerEntity 
      * @return List<AddressEntity> object
      */
     public List<AddressEntity> getAllAddress(CustomerEntity customerEntity) {
@@ -89,7 +89,7 @@ public class AddressService {
     }
 
     /**
-     * This method implements the business logic for 'Get All States' endpoint
+     * 
      * @return List<StateEntity> object
      */
     public List<StateEntity> getAllStates() {
@@ -97,7 +97,7 @@ public class AddressService {
     }
 
     /**
-     * This method implements the business logic for 'Get Address by Id' endpoint
+     * 
      *
      * @param addressUUID Address UUID
      * @param customerEntity Customer whose has made request
@@ -120,7 +120,7 @@ public class AddressService {
     }
 
     /**
-     * Deletes given address entity
+     * 
      * @param addressEntity Address to delete
      * @return AddressEntity object
      */

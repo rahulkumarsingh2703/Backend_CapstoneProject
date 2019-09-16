@@ -69,10 +69,10 @@ public class OrderController {
         String accessToken = authorization.split("Bearer ")[1];
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
-        // Get all orders by customer
+   
         List<OrderEntity> orderEntityList = orderService.getOrdersByCustomers(customerEntity.getUuid());
 
-        // Create response
+    
         CustomerOrderResponse customerOrderResponse = new CustomerOrderResponse();
 
         for (OrderEntity orderEntity : orderEntityList) {

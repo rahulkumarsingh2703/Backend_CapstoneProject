@@ -29,7 +29,7 @@ public class AddressController {
     private AddressService addressService;
 
     /**
-     * This api endpoint is used to save address for a customer
+     * 
      * @return ResponseEntity<SaveAddressResponse> type object along with HttpStatus Ok
      */
     @CrossOrigin
@@ -57,7 +57,7 @@ public class AddressController {
     }
 
     /**
-     * This api endpoint is used retrieve all the saved addresses in the database, for a customer
+     *  
      * @return ResponseEntity<AddressListResponse> type object along with HttpStatus OK
      */
     @RequestMapping(method = RequestMethod.GET, path = "/address/customer", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -68,10 +68,10 @@ public class AddressController {
         String accessToken = authorization.split("Bearer ")[1];
         CustomerEntity customerEntity = customerService.getCustomer(accessToken);
 
-        // Get all saved addresses
+
         List<AddressEntity> addressesList = addressService.getAllAddress(customerEntity);
 
-        // Create Response for saved addresses
+
         AddressListResponse addressListResponse = new AddressListResponse();
 
         for (AddressEntity addressEntity : addressesList) {
@@ -90,7 +90,7 @@ public class AddressController {
     }
 
     /**
-     * This api endpoint is used retrieve all the states in the database
+     *
      *
      * @return ResponseEntity<StatesListResponse> type object along with HttpStatus OK
      */
@@ -114,7 +114,7 @@ public class AddressController {
     }
 
     /**
-     * This api endpoint is used to delete an address
+     *
      * @return ResponseEntity<DeleteAddResponse> with HTTP status ok
      */
     @RequestMapping(method = RequestMethod.DELETE, path = "/address/{address_id}")

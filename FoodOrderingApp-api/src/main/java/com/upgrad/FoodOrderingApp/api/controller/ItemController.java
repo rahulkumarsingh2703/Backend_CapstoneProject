@@ -26,7 +26,7 @@ public class ItemController {
     private RestaurantService restaurantService;
 
     /**
-     * This api endpoint is used to get top 5 items by popularity
+     * 
      *
      * @param restaurantId UUID for restaurant entity
      *

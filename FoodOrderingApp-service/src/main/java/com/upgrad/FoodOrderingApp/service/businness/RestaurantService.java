@@ -26,7 +26,7 @@ public class RestaurantService {
     private CategoryDao categoryDao;
 
     /**
-     * This method implements the business logic for 'Get All Restaurant' endpoint
+     * 
      *
      * @return List<RestaurantEntity> object
      */
@@ -35,7 +35,7 @@ public class RestaurantService {
     }
 
     /**
-     * Returns restaurants matching to given name
+     * 
      *
      * @param restaurantName Restaurant name
      *
@@ -60,7 +60,7 @@ public class RestaurantService {
     }
 
     /**
-     * Returns restaurants for a given category
+     * 
      *
      * @param categoryId UUID of category
      *
@@ -86,7 +86,7 @@ public class RestaurantService {
     }
 
     /**
-     * Returns restaurant for a given UUID
+     * 
      *
      * @param uuid UUID of restaurant
      *
@@ -108,7 +108,7 @@ public class RestaurantService {
     }
 
     /**
-     * Updates restaurant average customer rating and number of customers rated
+     * 
      *
      * @param restaurantEntity UUID of restaurant entity
      * @param newRating Customer rating

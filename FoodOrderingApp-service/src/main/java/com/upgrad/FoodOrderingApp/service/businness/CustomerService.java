@@ -30,12 +30,12 @@ public class CustomerService {
     @Autowired
     private PasswordCryptographyProvider passwordCryptographyProvider;
 
-    /**
-     * Save Customer
-     * @param customerEntity
-     * @return
-     * @throws SignUpRestrictedException
-     */
+    
+     
+     @param customerEntity
+     @return
+     @throws SignUpRestrictedException
+     
     @Transactional(propagation = Propagation.REQUIRED)
     public CustomerEntity saveCustomer(CustomerEntity customerEntity) throws SignUpRestrictedException {
 
@@ -58,7 +58,7 @@ public class CustomerService {
     }
 
     /**
-     * authenticate based on the token
+     * 
      * @param contactnumber
      * @param password
      * @return
@@ -91,7 +91,7 @@ public class CustomerService {
     }
 
     /**
-     *  logout
+     *  
      * @param Access_Token
      * @return
      * @throws AuthorizationFailedException
@@ -113,7 +113,7 @@ public class CustomerService {
     }
 
     /**
-     *  validate and update password
+     * 
      * @param oldPassword
      * @param newPassword
      * @param customer
@@ -138,7 +138,7 @@ public class CustomerService {
     }
 
     /**
-     * update customer
+     * 
      * @param customer
      * @return
      * @throws UpdateCustomerException
@@ -153,7 +153,7 @@ public class CustomerService {
     }
 
     /**
-     *  update the customer
+     *  
      * @param authorization
      * @return
      * @throws AuthorizationFailedException
@@ -172,7 +172,7 @@ public class CustomerService {
     }
 
     /**
-     *  Validate the email
+     * 
      * @param email
      * @return
      */
@@ -185,7 +185,7 @@ public class CustomerService {
     }
 
     /**
-     *  Validate the contact number
+     *  
      * @param number
      * @return
      */
@@ -198,7 +198,7 @@ public class CustomerService {
     }
 
     /**
-     * Validate the password strength
+     * 
      * @param newPassword
      * @return
      */

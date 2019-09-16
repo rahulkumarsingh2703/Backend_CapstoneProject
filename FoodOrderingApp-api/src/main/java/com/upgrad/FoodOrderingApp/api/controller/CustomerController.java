@@ -33,7 +33,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     /**
-     *  1. signup endpoint
+     * 
      * @param signupCustomerRequest
      * @return
      * @throws SignUpRestrictedException
@@ -64,7 +64,7 @@ public class CustomerController {
     }
 
     /**
-     *  2. login endpoint
+     * 
      * @param authorization
      * @return
      * @throws AuthenticationFailedException
@@ -105,7 +105,7 @@ public class CustomerController {
     }
 
     /**
-     *  3. logout endpoint
+     * 
      * @param authorization
      * @return
      * @throws AuthorizationFailedException
@@ -122,7 +122,7 @@ public class CustomerController {
     }
 
     /**
-     *  4. update endpoint
+     * 
      * @param authorization
      * @param updateCustomer
      * @return
@@ -156,7 +156,7 @@ public class CustomerController {
     }
 
     /**
-     *  5.change password endpoint
+     * 
      * @param authorization
      * @param updatePasswordRequest
      * @return

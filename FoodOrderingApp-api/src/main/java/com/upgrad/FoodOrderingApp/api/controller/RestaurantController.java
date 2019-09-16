@@ -36,7 +36,7 @@ public class RestaurantController {
     private CustomerService customerService;
 
     /**
-     * This api endpoint is used to retrieve list of all restaurants
+     * 
      *
      * @return ResponseEntity<AllRestaurantResponse> type object along with HttpStatus OK
      */
@@ -82,7 +82,7 @@ public class RestaurantController {
     }
 
     /**
-     * This api endpoint is used to retrieve list of all restaurants by matching name
+     * 
      *
      * @param restaurantName Restaurant name to match
      *
@@ -138,7 +138,7 @@ public class RestaurantController {
     }
 
     /**
-     * This api endpoint is used to retrieve list of all restaurants by category ID
+     * 
      *
      * @param categoryId UUID of category
      *
@@ -189,7 +189,7 @@ public class RestaurantController {
     }
 
     /**
-     * This api endpoint is used to retrieve restaurant details by restaurant ID
+     * 
      *
      * @param restaurantId UUID of restaurant
      *
@@ -247,7 +247,7 @@ public class RestaurantController {
     }
 
     /**
-     * This api endpoint is used to update restaurant rating
+     * 
      *
      * @param customerRating Customer rating
      * @param restaurantId UUID of restaurant entity

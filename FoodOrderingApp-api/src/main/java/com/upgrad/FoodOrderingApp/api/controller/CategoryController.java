@@ -22,7 +22,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
     /**
-     * This api endpoint is used to retrieve all the categories present in the database, ordered by their name
+     * 
      *
      * @return ResponseEntity<CategoriesListResponse> type object along with HttpStatus OK
      */
@@ -47,7 +47,7 @@ public class CategoryController {
     }
 
     /**
-     * This api endpoint is used to retrieve category for given id with all items within that category
+     * 
      *
      * @param categoryId ID of category
      *
@@ -61,10 +61,10 @@ public class CategoryController {
             @PathVariable("category_id") final String categoryId)
             throws CategoryNotFoundException
     {
-        // Get all items for category
+       
         CategoryEntity categoryEntity = categoryService.getCategoryById(categoryId);
 
-        // Create response
+        
         CategoryDetailsResponse categoryDetailsResponse = new CategoryDetailsResponse().id(UUID.fromString(categoryEntity.getUuid())).categoryName(categoryEntity.getCategoryName());
 
         for (ItemEntity itemEntity : categoryEntity.getItems()) {

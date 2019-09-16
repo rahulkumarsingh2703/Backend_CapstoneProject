@@ -5,6 +5,10 @@ import java.util.Map;
 
 public enum GenericErrorCode implements ErrorCode {
 
+
+
+
+
     /**
      * Error message: <b>An unexpected error occurred. Please contact System Administrator</b><br>
      * <b>Cause:</b> This error could have occurred due to undetermined runtime errors.<br>

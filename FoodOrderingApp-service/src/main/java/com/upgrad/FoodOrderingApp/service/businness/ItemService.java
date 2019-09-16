@@ -27,7 +27,7 @@ public class ItemService {
     private CategoryDao categoryDao;
 
     /**
-     * Returns item for a given UUID
+     *
      *
      * @param uuid UUID of item entity
      * @return ItemEntity object
@@ -42,7 +42,7 @@ public class ItemService {
     }
 
     /**
-     * Returns popular items for a restaurant
+     * 
      *
      * @param restaurantEntity UUID of restaurant entity
      * @return List<ItemEntity> object
@@ -55,14 +55,14 @@ public class ItemService {
             }
         }
 
-        // count all with map
+     
         Map<String, Integer> map = new HashMap<String, Integer>();
         for (ItemEntity itemEntity : itemEntityList) {
             Integer count = map.get(itemEntity.getUuid());
             map.put(itemEntity.getUuid(), (count == null) ? 1 : count + 1);
         }
 
-        // sort map
+     
         Map<String, Integer> treeMap = new TreeMap<String, Integer>(map);
         List<ItemEntity> sortedItemEntityList = new ArrayList<ItemEntity>();
         for (Map.Entry<String, Integer> entry : treeMap.entrySet()) {
@@ -74,7 +74,7 @@ public class ItemService {
     }
 
     /**
-     * Returns items by for a given category of a restaurant
+     * 
      *
      * @param restaurantUUID UUID of restaurant entity
      * @param categoryUUID UUID of category entity
